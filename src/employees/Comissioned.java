@@ -4,8 +4,8 @@ public class Comissioned extends Salaried{
 	
 	private double percentage;
 	
-	public Comissioned(String inputN, String inputA, double pay, double comission, int size){
-		super(inputN, inputA, pay, size);
+	public Comissioned(String inputN, String inputA, double pay, double comission, int size, boolean sind){
+		super(inputN, inputA, pay, size, sind);
 		setPercentage(comission);
 	}
 

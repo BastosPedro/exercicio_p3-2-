@@ -58,6 +58,7 @@ public class Base {
 				case 11:
 					sWriter.close();
 					iWriter.close();
+					dWriter.close();
 					System.out.println("Goodbye");
 					isRunning = false;
 			}

@@ -6,12 +6,14 @@ public class Employee {
 	private int id;
 	private double payment;
 	private double finalPayment;
+	private boolean isSindicate;
 	
-	public Employee(String inputName, String inputAddress, double basePay, int hashSize){
+	public Employee(String inputName, String inputAddress, double basePay, int hashSize, boolean sind){
 		setName(inputName);
 		setAddress(inputAddress);
 		setPayment(basePay);
 		setId(hashSize);
+		setSindicate(sind);
 	}
 	
 	public String getName() {
@@ -46,5 +48,13 @@ public class Employee {
 	}
 	public void calculate(double input){
 		this.finalPayment = finalPayment + input;
+	}
+
+	public boolean isSindicate() {
+		return isSindicate;
+	}
+
+	public void setSindicate(boolean isSindicate) {
+		this.isSindicate = isSindicate;
 	}
 }
