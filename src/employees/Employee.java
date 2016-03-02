@@ -4,10 +4,10 @@ public class Employee {
 	private String name;
 	private String address;
 	private int id;
-	private int payment;
-	private int finalPayment;
+	private double payment;
+	private double finalPayment;
 	
-	public Employee(String inputName, String inputAddress, int basePay, int hashSize){
+	public Employee(String inputName, String inputAddress, double basePay, int hashSize){
 		setName(inputName);
 		setAddress(inputAddress);
 		setPayment(basePay);
@@ -32,16 +32,19 @@ public class Employee {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getPayment() {
+	public double getPayment() {
 		return payment;
 	}
-	public void setPayment(int payment) {
+	public void setPayment(double payment) {
 		this.payment = payment;
 	}
-	public int getFinalPayment(){
+	public double getFinalPayment(){
 		return finalPayment;
 	}
-	public void calculate(int variable){
-		this.finalPayment = finalPayment + variable;
+	public void setFinalPayment(double payment){
+		this.finalPayment = payment;
+	}
+	public void calculate(double input){
+		this.finalPayment = finalPayment + input;
 	}
 }
