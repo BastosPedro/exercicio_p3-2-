@@ -4,16 +4,20 @@ public class Employee {
 	private String name;
 	private String address;
 	private int id;
-	private double payment;
+	private double basePayment;
 	private double finalPayment;
-	private boolean isSindicate;
+	private boolean isSyndicate;
+	private double baseTax;
+	private double debt;
 	
-	public Employee(String inputName, String inputAddress, double basePay, int hashSize, boolean sind){
+	public Employee(String inputName, String inputAddress, double basePay, int hashSize, boolean synd, double tax){
 		setName(inputName);
 		setAddress(inputAddress);
-		setPayment(basePay);
+		setBasePayment(basePay);
 		setId(hashSize);
-		setSindicate(sind);
+		setSyndicate(synd);
+		setTax(tax);
+		setDebt(0);
 	}
 	
 	public String getName() {
@@ -34,11 +38,17 @@ public class Employee {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public double getPayment() {
-		return payment;
+	public double getBasePayment() {
+		return basePayment;
 	}
-	public void setPayment(double payment) {
-		this.payment = payment;
+	public void setBasePayment(double payment) {
+		this.basePayment = payment;
+	}
+	public double getDebt(){
+		return this.debt;
+	}
+	public void setDebt(double debt){
+		this.debt = debt;
 	}
 	public double getFinalPayment(){
 		return finalPayment;
@@ -46,15 +56,19 @@ public class Employee {
 	public void setFinalPayment(double payment){
 		this.finalPayment = payment;
 	}
+	public boolean isSyndicate() {
+		return isSyndicate;
+	}
+	public void setSyndicate(boolean isSyndicate) {
+		this.isSyndicate = isSyndicate;
+	}
+	public void setTax(double tax){
+		this.baseTax = tax;
+	}
+	public double getTax(){
+		return this.baseTax;
+	}
 	public void calculate(double input){
 		this.finalPayment = finalPayment + input;
-	}
-
-	public boolean isSindicate() {
-		return isSindicate;
-	}
-
-	public void setSindicate(boolean isSindicate) {
-		this.isSindicate = isSindicate;
 	}
 }

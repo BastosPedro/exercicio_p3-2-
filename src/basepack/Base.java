@@ -3,26 +3,35 @@ import employees.*;
 import basepack.MainMenu;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 
-public class Base {
-	private static boolean isRunning = true;
-	private static int cursor;
-	
+
+public class Base {	
 	public static void main(String[] args){
+		boolean isRunning = true;
+		int cursor = 0;
+		int counter = 0;
 		HashMap<String, Employee> employeeHash = new HashMap<String, Employee>();
-		Scanner sWriter = new Scanner(System.in);
-		Scanner iWriter = new Scanner(System.in);
-		Scanner dWriter = new Scanner(System.in);
-		cursor = 0;
 		while(isRunning == true){
+			try{
+			Scanner dWriter = new Scanner(System.in);
+			Scanner iWriter = new Scanner(System.in);
+			Scanner sWriter = new Scanner(System.in);
 			switch (cursor){
 				case 0:
 					MainMenu.printOptions();
 					cursor = iWriter.nextInt();
+					if(cursor >=12){
+						System.out.println("Please choose a real option");
+						cursor = iWriter.nextInt();
+					}
 					break;
 				case 1:
-					Employee aux = MainMenu.employ(iWriter, sWriter, dWriter, employeeHash.size());
-					employeeHash.put(aux.getName(), aux);
+					Employee aux = MainMenu.employ(sWriter, dWriter, iWriter, counter);
+					if(aux != null) {
+						employeeHash.put(aux.getName(), aux);
+						counter++;
+					}
 					cursor = 0;
 					break;
 				case 2:
@@ -38,6 +47,7 @@ public class Base {
 					cursor = 0;
 					break;
 				case 5:
+					MainMenu.applyTax(sWriter, dWriter, employeeHash);
 					cursor = 0;
 					break;
 				case 6:
@@ -56,13 +66,17 @@ public class Base {
 					cursor = 0;
 					break;
 				case 11:
-					sWriter.close();
-					iWriter.close();
 					dWriter.close();
+					iWriter.close();
+					sWriter.close();
 					System.out.println("Goodbye");
 					isRunning = false;
-			}
-				
+				}
+			}				
+		catch(InputMismatchException e){
+			System.out.println("You've not entered an integer, please choose a right option");
+			cursor = 0;
 		}
 	}
+}
 }
