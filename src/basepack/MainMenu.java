@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import basepack.Auxiliary;
 import employees.Comissioned;
 import employees.Employee;
 import employees.Hourly;
@@ -31,13 +32,13 @@ public class MainMenu {
 		while(running == true){
 			System.out.println("Please enter our newest employee's name, " + 
 							   "or you can just type 'cancel' to abort:");
-			auxName = stringer.nextLine();
+			auxName = Auxiliary.getString(stringer);
 			if(auxName.equals("cancel")){
 				System.out.println("Aborting...");
 				return null;
 			}
 			System.out.println("Okay, enter his/her address:");
-			auxAddress = stringer.nextLine();
+			auxAddress = Auxiliary.getString(stringer);
 			System.out.println("Is he/her with the syndicate?\n1)Yes 2)No");
 			while(auxChoose >= 3 || auxChoose == 0) {
 				try{
@@ -114,7 +115,7 @@ public class MainMenu {
 		while(running){
 			System.out.println("Please write the employee's name,"
 								+ "or you can just type 'cancel' to abort");
-			String aux = stringer.nextLine();
+			String aux = Auxiliary.getString(stringer);
 			if(aux.equals("cancel")){
 				System.out.println("Aborting...");
 				running = false;
@@ -134,7 +135,7 @@ public class MainMenu {
 		}
 		while(running){
 			System.out.println("Please insert the employee's name, or you can just write 'cancel' to abort");
-			String aux = stringer.nextLine();
+			String aux = Auxiliary.getString(stringer);
 			if(aux.equals("cancel")){
 				System.out.println("Aborting...");
 				running = false;
@@ -168,30 +169,31 @@ public class MainMenu {
 	}
 	public static void sendResults(Scanner stringer, Scanner doubler, HashMap<String, Employee> hash){
 		boolean running = true;
+		double sale = 0;
 		if(hash.isEmpty() == true){
 			System.out.println("Employee list is empty");
 			running = false;
 		}
 		while(running){
-			try{
-				doubler = new Scanner(System.in);
-				System.out.println("Please insert the employee's name, or just write 'cancel' to abort");
-				String aux = stringer.nextLine();
-				if(aux.equals("cancel")){
-					System.out.println("Aborting...");
-					running = false;
-				}
-				else if(hash.containsKey(aux) == true){
-					if(hash.get(aux) instanceof Comissioned){
-						System.out.println("Please, what price did " + hash.get(aux).getName() + " get for the sale?");
-						double sale = doubler.nextDouble();
-						hash.get(aux).calculate(sale*(((Comissioned) hash.get(aux)).getPercentage()));
-						running = false;
-					} else System.out.println("This is not a comissioned employee");
-				} else System.out.println("No one called like that works here");
-			}catch(InputMismatchException e){
-				System.out.println("Wrong input, resetting process...");
+			System.out.println("Please insert the employee's name, or just write 'cancel' to abort");
+			String aux = Auxiliary.getString(stringer);
+			if(aux.equals("cancel")){
+				System.out.println("Aborting...");
+				running = false;
 			}
+			else if(hash.containsKey(aux) == true){
+				if(hash.get(aux) instanceof Comissioned){
+					System.out.println("Please, what price did " + hash.get(aux).getName() + " get for the sale?");
+					try{
+						doubler = new Scanner(System.in);
+						sale = doubler.nextDouble();
+					}catch(InputMismatchException e){
+						System.out.println("Wrong input, please try again");
+					}
+					hash.get(aux).calculate(sale*(((Comissioned) hash.get(aux)).getPercentage()));
+					running = false;
+				} else System.out.println("This is not a comissioned employee");
+			} else System.out.println("No one called like that works here");
 		}
 	}
 	public static void applyTax(Scanner stringer, Scanner doubler, HashMap<String, Employee> hash){
@@ -233,34 +235,69 @@ public class MainMenu {
 			running = false;
 		}
 		while(running){
-			try{
-				System.out.println("Please enter the employee's name");
-				String aux = stringer.nextLine();
-				if(hash.get(aux) == null) System.out.println("No one called like that works here");
-				if(hash.containsKey(aux)){
+			System.out.println("Please enter the employee's name, or just type 'cancel' to abort");
+			String auxName = Auxiliary.getString(stringer);
+			if(auxName.equals("cancel") == true){
+				System.out.println("Aborting...");
+				running = false;
+			}
+			if(hash.containsKey(auxName)){
 				switch(auxChoose){
 					case 0:
 						System.out.println("What do you want to change?\n" +
 									   	   "1) Name 2) Address 3) Sallary type\n" +
 									       "4) Payment type 5) Syndicate 6) Syndicate ID\n" +
-									       "7) Syndicate tax");
-						auxChoose = inter.nextInt();
-						break;
+									       "7) Syndicate tax 8) Finish changes");
+						while(auxChoose == 0 || auxChoose >= 12){
+							try{
+								inter = new Scanner(System.in);
+								auxChoose = inter.nextInt();
+								break;
+							}catch(InputMismatchException e){
+								System.out.println("Wrong input, please try again");
+							}
+						}
 					case 1:
 						System.out.println("Please choose a new name");
-						String newName = stringer.nextLine();
+						String newName = Auxiliary.getString(stringer);
+						hash.get(auxName).setName(newName);
+						hash.put(newName, hash.get(auxName));
+						hash.remove(auxName);
+						auxName = newName;
+						auxChoose = 0;
+						System.out.println("Name changed");
+						break;
 					case 2:
+						System.out.println("Please choose a new address");
+						String newAddress = Auxiliary.getString(stringer);
+						hash.get(auxName).setAddress(newAddress);
+						System.out.println("Address changed");
+						break;
 					case 3:
+						System.out.println("Please type the new type as 'hourly', 'salaried' or 'comissioned'");
+						String newType = Auxiliary.getString(stringer);
+						if(newType.equals("hourly")){
+							if(hash.get(auxName) instanceof Hourly == true){
+								System.out.println("Employee is already and hourly one");
+							}
+							else{
+								
+							}
+						}
+						else if(newType.equals("salaried")){
+							
+						}
 					case 4:
 					case 5:
 					case 6:
 					case 7:
+					case 8:
+						System.out.println("Changes completed");
+						running = false;
 					}
 				}
 				
-			}catch(InputMismatchException e){
-				System.out.println("Wrong input, resetting process");
 			}
 		}
 	}
-}
+
