@@ -1,6 +1,6 @@
 package employees;
 
-public class Comissioned extends Salaried{
+public class Comissioned extends Employee{
 	
 	private double percentage;
 	

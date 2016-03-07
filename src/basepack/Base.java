@@ -1,6 +1,7 @@
 package basepack;
 import employees.*;
 import basepack.MainMenu;
+import basepack.Auxiliary;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -21,9 +22,8 @@ public class Base {
 				case 0:
 					MainMenu.printOptions();
 					cursor = iWriter.nextInt();
-					if(cursor >=12){
-						System.out.println("Please choose a real option");
-						cursor = iWriter.nextInt();
+					while(cursor == 0 || cursor >=12){
+						cursor = Auxiliary.writeInt(iWriter);
 					}
 					break;
 				case 1:
@@ -51,6 +51,7 @@ public class Base {
 					cursor = 0;
 					break;
 				case 6:
+					MainMenu.changeEmployee(sWriter, dWriter, iWriter, employeeHash);
 					cursor = 0;
 					break;
 				case 7:
@@ -72,11 +73,9 @@ public class Base {
 					System.out.println("Goodbye");
 					isRunning = false;
 				}
-			}				
-		catch(InputMismatchException e){
-			System.out.println("You've not entered an integer, please choose a right option");
-			cursor = 0;
-		}
+			}finally{
+				//whatever
+			}
 	}
 }
 }

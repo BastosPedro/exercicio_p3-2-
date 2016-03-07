@@ -1,7 +1,6 @@
 package basepack;
 
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import basepack.Auxiliary;
@@ -32,63 +31,38 @@ public class MainMenu {
 		while(running == true){
 			System.out.println("Please enter our newest employee's name, " + 
 							   "or you can just type 'cancel' to abort:");
-			auxName = Auxiliary.getString(stringer);
+			auxName = Auxiliary.writeString(stringer);
 			if(auxName.equals("cancel")){
 				System.out.println("Aborting...");
 				return null;
 			}
 			System.out.println("Okay, enter his/her address:");
-			auxAddress = Auxiliary.getString(stringer);
+			auxAddress = Auxiliary.writeString(stringer);
 			System.out.println("Is he/her with the syndicate?\n1)Yes 2)No");
 			while(auxChoose >= 3 || auxChoose == 0) {
-				try{
-					inter = new Scanner(System.in);
-					auxChoose = inter.nextInt();
-				}catch(InputMismatchException e){
-					System.out.println("Wrong input, try again");
-				}
+				auxChoose = Auxiliary.writeInt(inter);
 			}
 			if(auxChoose == 1) auxSyndicate = true;
 			auxChoose = 4;
 			System.out.println("What kind of employee is he/her?\n 1)Hourly 2)Salaried 3)Comissioned");
 			while(auxChoose >= 4 || auxChoose == 0) {
-				try{
-					inter = new Scanner(System.in);
-					auxChoose = inter.nextInt();
-				}catch(InputMismatchException e){
-					System.out.println("Wrong input, try again");
-				}
+				auxChoose = Auxiliary.writeInt(inter);
 			}
 			System.out.println("Great, now please insert his or her base sallary:");
 			while(auxPayment == 0){
-				try{
-					doubler = new Scanner(System.in);
-					auxPayment = doubler.nextDouble();
-				}catch(InputMismatchException e){
-					System.out.println("Wrong input, try again");
-				}
+				auxPayment = Auxiliary.writeDouble(doubler);
 			}
 			if(auxChoose == 3){
 				System.out.println("Wait, there's more. Please enter the employee's comission\n"
 						+ "(just write the percentage)");
 				while(auxComission == 0){
-					try{
-						doubler = new Scanner(System.in);
-						auxComission = doubler.nextDouble();	
-					}catch(InputMismatchException e){
-						System.out.println("Wrong input, try again");
-					}
+					auxComission = Auxiliary.writeDouble(doubler);
 				}
 			}
 			if(auxSyndicate){
 				System.out.println("Last, but no least, please insert the syndicate's tax");
 				while(auxTax == 0){
-					try{
-						doubler = new Scanner(System.in);
-						auxTax = doubler.nextDouble();
-					}catch(InputMismatchException e){
-						System.out.println("Wrong input, try again");
-					}
+					auxTax = Auxiliary.writeDouble(doubler);
 				}
 			}
 			if (auxChoose == 1){
@@ -115,7 +89,7 @@ public class MainMenu {
 		while(running){
 			System.out.println("Please write the employee's name,"
 								+ "or you can just type 'cancel' to abort");
-			String aux = Auxiliary.getString(stringer);
+			String aux = Auxiliary.writeString(stringer);
 			if(aux.equals("cancel")){
 				System.out.println("Aborting...");
 				running = false;
@@ -135,7 +109,7 @@ public class MainMenu {
 		}
 		while(running){
 			System.out.println("Please insert the employee's name, or you can just write 'cancel' to abort");
-			String aux = Auxiliary.getString(stringer);
+			String aux = Auxiliary.writeString(stringer);
 			if(aux.equals("cancel")){
 				System.out.println("Aborting...");
 				running = false;
@@ -147,12 +121,7 @@ public class MainMenu {
 				System.out.println("Please insert how many hours " + hash.get(aux).getName() + " worked");
 				int hours = 0;
 				while (hours == 0){
-					try{
-						inter = new Scanner(System.in);
-						hours = inter.nextInt();
-					}catch(InputMismatchException e){
-						System.out.println("Wrong input, please try again");
-					}
+					hours = Auxiliary.writeInt(inter);
 				}
 				if (hours <=8){
 					hash.get(aux).calculate(hours*(hash.get(aux).getBasePayment()));
@@ -176,7 +145,7 @@ public class MainMenu {
 		}
 		while(running){
 			System.out.println("Please insert the employee's name, or just write 'cancel' to abort");
-			String aux = Auxiliary.getString(stringer);
+			String aux = Auxiliary.writeString(stringer);
 			if(aux.equals("cancel")){
 				System.out.println("Aborting...");
 				running = false;
@@ -184,11 +153,8 @@ public class MainMenu {
 			else if(hash.containsKey(aux) == true){
 				if(hash.get(aux) instanceof Comissioned){
 					System.out.println("Please, what price did " + hash.get(aux).getName() + " get for the sale?");
-					try{
-						doubler = new Scanner(System.in);
-						sale = doubler.nextDouble();
-					}catch(InputMismatchException e){
-						System.out.println("Wrong input, please try again");
+					while(sale == 0){
+						sale = Auxiliary.writeDouble(doubler);
 					}
 					hash.get(aux).calculate(sale*(((Comissioned) hash.get(aux)).getPercentage()));
 					running = false;
@@ -205,7 +171,7 @@ public class MainMenu {
 		}
 		while(running){
 			System.out.println("Please write the employee's name below, or just write 'cancel' to abort");
-			String auxName = stringer.nextLine();
+			String auxName = Auxiliary.writeString(stringer);
 			if(auxName.equals("cancel")){
 				System.out.println("Aborting...");
 				running = false;
@@ -214,12 +180,7 @@ public class MainMenu {
 				if(hash.get(auxName).isSyndicate() == true){					
 					System.out.println("Please insert how much money he/she is going to lose.");
 					while(auxTax == 0){
-						try{
-							doubler = new Scanner(System.in);
-							auxTax = doubler.nextDouble();
-						}catch(InputMismatchException e){
-							System.out.println("Wrong input, try again");
-						}
+						auxTax = Auxiliary.writeDouble(doubler);
 					}
 					hash.get(auxName).setDebt(hash.get(auxName).getDebt() + auxTax);
 					System.out.println("Now he/she owes " + hash.get(auxName).getDebt() + " %");
@@ -236,64 +197,150 @@ public class MainMenu {
 		}
 		while(running){
 			System.out.println("Please enter the employee's name, or just type 'cancel' to abort");
-			String auxName = Auxiliary.getString(stringer);
-			if(auxName.equals("cancel") == true){
+			String auxName = Auxiliary.writeString(stringer);
+			if(auxName.equals("cancel")){
 				System.out.println("Aborting...");
 				running = false;
+			}
+			else if(hash.containsKey(auxName) == false){
+				System.out.println("No one called like that works here");
 			}
 			if(hash.containsKey(auxName)){
 				switch(auxChoose){
 					case 0:
 						System.out.println("What do you want to change?\n" +
 									   	   "1) Name 2) Address 3) Sallary type\n" +
-									       "4) Payment type 5) Syndicate 6) Syndicate ID\n" +
-									       "7) Syndicate tax 8) Finish changes");
+									       "4) Payment type 5) Syndicate membership 6) Syndicate ID\n" +
+									       "7) Syndicate tax 8) Return to main menu");
 						while(auxChoose == 0 || auxChoose >= 12){
-							try{
-								inter = new Scanner(System.in);
-								auxChoose = inter.nextInt();
-								break;
-							}catch(InputMismatchException e){
-								System.out.println("Wrong input, please try again");
-							}
+							auxChoose = Auxiliary.writeInt(inter);
 						}
 					case 1:
 						System.out.println("Please choose a new name");
-						String newName = Auxiliary.getString(stringer);
+						String newName = Auxiliary.writeString(stringer);
 						hash.get(auxName).setName(newName);
 						hash.put(newName, hash.get(auxName));
 						hash.remove(auxName);
 						auxName = newName;
 						auxChoose = 0;
 						System.out.println("Name changed");
+						auxChoose = 0;
 						break;
 					case 2:
 						System.out.println("Please choose a new address");
-						String newAddress = Auxiliary.getString(stringer);
+						String newAddress = Auxiliary.writeString(stringer);
 						hash.get(auxName).setAddress(newAddress);
 						System.out.println("Address changed");
+						auxChoose = 0;
 						break;
 					case 3:
 						System.out.println("Please type the new type as 'hourly', 'salaried' or 'comissioned'");
-						String newType = Auxiliary.getString(stringer);
+						String newType = Auxiliary.writeString(stringer);
 						if(newType.equals("hourly")){
-							if(hash.get(auxName) instanceof Hourly == true){
-								System.out.println("Employee is already and hourly one");
+							if(hash.get(auxName) instanceof Hourly){
+								System.out.println("Employee is already an hourly one");
+								auxChoose = 0;
+								break;
+							}
+							if(hash.get(auxName)instanceof Comissioned){
+								Comissioned temp = (Comissioned)hash.get(auxName);
+								temp.setPercentage(0);
+								hash.replace(auxName, temp);
+							}
+							System.out.println("Please enter how much will she or he be getting per hour:");
+							double newBasePay = 0;
+							while(newBasePay == 0){
+								newBasePay = Auxiliary.writeDouble(doubler);
+							}
+							hash.get(auxName).setBasePayment(newBasePay);
+							hash.replace(auxName, (Hourly)hash.get(auxName));
+							auxChoose = 0;
+							break;
+							
+						}
+						else if(newType.equals("comissioned")){
+							if(hash.get(auxName) instanceof Comissioned){
+								System.out.println("Employee is already a comissioned one");
+								auxChoose = 0;
+								break;
 							}
 							else{
-								
+								System.out.println("Please enter how much he or she will get Monttlhy");
+								double newBasePay = Auxiliary.writeDouble(doubler);
+								hash.get(auxName).setBasePayment(newBasePay);
+								System.out.println("Now please enter his or her comission(just write the percentage");
+								double newComission = Auxiliary.writeDouble(doubler);
+								Comissioned temp = (Comissioned)hash.get(auxName);
+								temp.setPercentage(newComission);
+								hash.replace(auxName, temp);
+								System.out.println("Conversion complete");
+								auxChoose = 0;
+								break;
 							}
 						}
 						else if(newType.equals("salaried")){
-							
+							if(hash.get(auxName) instanceof Salaried){
+								System.out.println("Employee is already a salaried one");
+								auxChoose = 0;
+								break;
+							}
+							if(hash.get(auxName) instanceof Comissioned){
+								Comissioned temp = (Comissioned)hash.get(auxName);
+								temp.setPercentage(0);
+								hash.replace(auxName, temp);
+							}
+							hash.replace(auxName, (Salaried)hash.get(auxName));
+							auxChoose = 0;
+							break;
+						}
+						else{
+							System.out.println("Wrong input, please try again");
+							auxChoose = 0;
+							break;
 						}
 					case 4:
+						//not yet
+						auxChoose = 0;
+						break;
 					case 5:
+						if(hash.get(auxName).isSyndicate()){
+							System.out.println("Is he or she still with the syndicate?");
+						} else System.out.println("Will he or she join the syndicate?");
+						
+						while(auxChoose != 1 || auxChoose != 2){
+							System.out.println("1)Yes 2)No");
+							auxChoose = Auxiliary.writeInt(inter);
+						}
+						if(auxChoose == 1){
+							hash.get(auxName).setSyndicate(true);
+							auxChoose = 0;
+							break;
+						}
+						else {
+							hash.get(auxName).setSyndicate(false);
+							auxChoose = 0;
+							break;
+						}
 					case 6:
+						//not yet
+						auxChoose = 0;
+						break;
 					case 7:
+						if(hash.get(auxName).isSyndicate()){
+							System.out.println("Please enter the new base tax");
+							double temp = Auxiliary.writeDouble(doubler);
+							hash.get(auxName).setTax(temp);
+							auxChoose = 0;
+							break;
+						}else{
+							System.out.println("The employee is not in the syndicate");
+							auxChoose = 0;
+							break;
+						}
 					case 8:
-						System.out.println("Changes completed");
+						System.out.println("Returning to main menu");
 						running = false;
+						break;
 					}
 				}
 				
