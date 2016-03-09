@@ -9,10 +9,10 @@ import java.util.HashMap;
 public class Main {	
 	public static void main(String[] args){
 		boolean isRunning = true;
-		int cursor = 0;
-		int counter = 0;
+		int cursor = 0,  systemCounter = 0, syndicateCounter = 0;
 		HashMap<String, Employee> employeeHash = new HashMap<String, Employee>();
 		MenuOptions MainMenu = new MenuOptions();
+		
 		while(isRunning == true){
 			try{
 			Scanner dWriter = new Scanner(System.in);
@@ -20,17 +20,22 @@ public class Main {
 			Scanner sWriter = new Scanner(System.in);
 			switch (cursor){
 				case 0:
-					MainMenu.printOptions();
+					Auxiliary.printOptions();
 					cursor = iWriter.nextInt();
 					while(cursor == 0 || cursor >=12){
 						cursor = Auxiliary.writeInt(iWriter);
 					}
 					break;
 				case 1:
-					Employee aux = MainMenu.employ(sWriter, dWriter, iWriter, counter);
+					Employee aux = MainMenu.employ(sWriter, dWriter, iWriter, systemCounter);
 					if(aux != null) {
+						systemCounter++;
+						aux.setId(systemCounter);
+						if(aux.isSyndicate()){
+							syndicateCounter++;
+							aux.setSyndicateId(syndicateCounter);
+						}
 						employeeHash.put(aux.getName(), aux);
-						counter++;
 					}
 					cursor = 0;
 					break;
@@ -39,11 +44,11 @@ public class Main {
 					cursor = 0;
 					break;
 				case 3:
-					MainMenu.sendCard(sWriter, iWriter, employeeHash);
+					MainMenu.sendHours(sWriter, iWriter, employeeHash);
 					cursor = 0;
 					break;
 				case 4:
-					MainMenu.sendResults(sWriter, dWriter, employeeHash);
+					MainMenu.sendSale(sWriter, dWriter, employeeHash);
 					cursor = 0;
 					break;
 				case 5:

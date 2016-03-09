@@ -1,5 +1,5 @@
 package payment;
 
 public enum Frequency {
-	WEEKLY, TWICEAMONTH, MONTHLY;
+	WEEKLY, TWICEAMONTH, MONTHLY, OTHER;
 }
