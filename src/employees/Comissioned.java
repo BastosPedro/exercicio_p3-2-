@@ -8,7 +8,10 @@ public class Comissioned extends Employee{
 		super(inputN, inputA, pay, size, synd, tax);
 		setPercentage(comission);
 	}
-
+	
+	public void calculate(double sale){
+		this.setFinalPayment(getFinalPayment() + (sale*this.getPercentage()));
+	}
 	public double getPercentage() {
 		return percentage;
 	}

@@ -9,8 +9,9 @@ import employees.Employee;
 import employees.Hourly;
 import employees.Salaried;
 
-public class MainMenu {
-	public static void printOptions(){
+public class MenuOptions {
+	MenuOptions(){}
+	public void printOptions(){
 		System.out.println("Welcome, please choose an option\n" +
 						    "1) Add employee\n" + "2) Remove employee\n" +
 							"3) Send payment card\n" + "4) Send sales result\n" + 
@@ -19,12 +20,9 @@ public class MainMenu {
 						    "9) Payment schedule\n" + "10) Create schedule\n" +
 							"11) Exit");
 	}
-	public static Employee employ(Scanner stringer, Scanner doubler, Scanner inter, int hashSize){
-		boolean running = true;
-		boolean auxSyndicate = false;
-		double auxPayment = 0;
-		double auxComission = 0;
-		double auxTax = 0;
+	public Employee employ(Scanner stringer, Scanner doubler, Scanner inter, int hashSize){
+		boolean running = true, auxSyndicate = false;
+		double auxPayment = 0, auxComission = 0, auxTax = 0;
 		int auxChoose = 3;
 		String auxName;
 		String auxAddress;
@@ -65,22 +63,20 @@ public class MainMenu {
 					auxTax = Auxiliary.writeDouble(doubler);
 				}
 			}
+			System.out.println(auxName + " got employed! Huzzah!");
 			if (auxChoose == 1){
-				System.out.println(auxName + " got employed! Huzzah!");
 				return new Hourly(auxName, auxAddress, auxPayment, hashSize, auxSyndicate, auxTax);
 			}
 			else if(auxChoose == 2){
-				System.out.println(auxName + " got employed! Huzzah!");
 				return new Salaried(auxName, auxAddress, auxPayment, hashSize, auxSyndicate, auxTax);
 			}
 			else{
-				System.out.println(auxName + " got employed! Huzzah!");
 				return new Comissioned(auxName, auxAddress, auxPayment, auxComission, hashSize, auxSyndicate, auxTax);
 			}
 		}
 		return null;
 	}
-	public static void crise(Scanner stringer, HashMap<String, Employee> hash){
+	public void crisis(Scanner stringer, HashMap<String, Employee> hash){
 		boolean running = true;
 		if(hash.isEmpty()==true){
 			System.out.println("Empty employee list");
@@ -101,7 +97,7 @@ public class MainMenu {
 			} else System.out.println("No one called like that works here");
 		}
 	}
-	public static void sendCard(Scanner stringer, Scanner inter,HashMap<String, Employee> hash){
+	public void sendCard(Scanner stringer, Scanner inter,HashMap<String, Employee> hash){
 		boolean running = true;
 		if(hash.isEmpty() == true){
 			System.out.println("Employee list is empty");
@@ -123,20 +119,14 @@ public class MainMenu {
 				while (hours == 0){
 					hours = Auxiliary.writeInt(inter);
 				}
-				if (hours <=8){
-					hash.get(aux).calculate(hours*(hash.get(aux).getBasePayment()));
-				}
-				else{
-					hash.get(aux).calculate((hash.get(aux).getBasePayment()) * 8);
-					hash.get(aux).calculate((hash.get(aux).getBasePayment()*1.5)*(hours - 8));
-				}
+				hash.get(aux).calculate(hours);
 				System.out.println(hash.get(aux).getName() + " got " + hash.get(aux).getFinalPayment() +
 									   " reais on his paycheck now");
 				running = false;
 			} else System.out.println("This employee is not an hourly one");
 		}
 	}
-	public static void sendResults(Scanner stringer, Scanner doubler, HashMap<String, Employee> hash){
+	public void sendResults(Scanner stringer, Scanner doubler, HashMap<String, Employee> hash){
 		boolean running = true;
 		double sale = 0;
 		if(hash.isEmpty() == true){
@@ -156,13 +146,13 @@ public class MainMenu {
 					while(sale == 0){
 						sale = Auxiliary.writeDouble(doubler);
 					}
-					hash.get(aux).calculate(sale*(((Comissioned) hash.get(aux)).getPercentage()));
+					hash.get(aux).calculate(sale);
 					running = false;
 				} else System.out.println("This is not a comissioned employee");
 			} else System.out.println("No one called like that works here");
 		}
 	}
-	public static void applyTax(Scanner stringer, Scanner doubler, HashMap<String, Employee> hash){
+	public void applyTax(Scanner stringer, Scanner doubler, HashMap<String, Employee> hash){
 		boolean running = true;
 		double auxTax = 0;
 		if(hash.isEmpty() == true){
@@ -188,7 +178,7 @@ public class MainMenu {
 			}else System.out.println("No one called like that works here.");	
 		}
 	}
-	public static void changeEmployee(Scanner stringer, Scanner doubler, Scanner inter, HashMap<String, Employee> hash){
+	public void changeEmployee(Scanner stringer, Scanner doubler, Scanner inter, HashMap<String, Employee> hash){
 		boolean running = true;
 		int auxChoose = 0;
 		if(hash.isEmpty() == true){

@@ -1,18 +1,18 @@
 package basepack;
 import employees.*;
-import basepack.MainMenu;
+import basepack.MenuOptions;
 import basepack.Auxiliary;
 import java.util.Scanner;
 import java.util.HashMap;
-import java.util.InputMismatchException;
 
 
-public class Base {	
+public class Main {	
 	public static void main(String[] args){
 		boolean isRunning = true;
 		int cursor = 0;
 		int counter = 0;
 		HashMap<String, Employee> employeeHash = new HashMap<String, Employee>();
+		MenuOptions MainMenu = new MenuOptions();
 		while(isRunning == true){
 			try{
 			Scanner dWriter = new Scanner(System.in);
@@ -35,7 +35,7 @@ public class Base {
 					cursor = 0;
 					break;
 				case 2:
-					MainMenu.crise(sWriter, employeeHash);
+					MainMenu.crisis(sWriter, employeeHash);
 					cursor = 0;
 					break;
 				case 3:
@@ -74,7 +74,7 @@ public class Base {
 					isRunning = false;
 				}
 			}finally{
-				//whatever
+				//whatever it just asked me
 			}
 	}
 }

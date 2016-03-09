@@ -1,23 +1,20 @@
 package employees;
 
 public class Employee {
-	private String name;
-	private String address;
+	private String name, address;
+	private double basePayment, finalPayment, baseTax, debt;
 	private int id;
-	private double basePayment;
-	private double finalPayment;
 	private boolean isSyndicate;
-	private double baseTax;
-	private double debt;
 	
-	public Employee(String inputName, String inputAddress, double basePay, int hashSize, boolean synd, double tax){
+	public Employee(String inputName, String inputAddress, double basePay, int inputId, boolean synd, double tax){
 		setName(inputName);
 		setAddress(inputAddress);
 		setBasePayment(basePay);
-		setId(hashSize);
+		setId(inputId);
 		setSyndicate(synd);
 		setTax(tax);
 		setDebt(0);
+		setFinalPayment(0);
 	}
 	
 	public String getName() {

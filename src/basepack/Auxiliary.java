@@ -1,24 +1,24 @@
 package basepack;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import basepack.NameContainsNumException;
 
 public class Auxiliary {
+	@SuppressWarnings("resource")
 	public static String writeString(Scanner stringer){
 		boolean running = true;
 		while(running){
 			try{
 				stringer = new Scanner(System.in);
 				String temp = stringer.nextLine();
-				boolean containsNum = temp.chars().anyMatch(x-> Character.isDigit(x));
-				if(containsNum){
-					throw new NameContainsNumException();
+				if(temp.chars().anyMatch(x-> Character.isDigit(x))){
+					throw new Exception();
 				} else return temp;
-			}catch(NameContainsNumException e){
+			}catch(Exception e){
 				System.out.println("Wrong input, please try again");
 			}
 		}return null;
 	}
+	@SuppressWarnings("resource")
 	public static int writeInt(Scanner inter){
 		boolean running = true;
 		while(running){
@@ -31,6 +31,7 @@ public class Auxiliary {
 			}
 		}return 0;
 	}
+	@SuppressWarnings("resource")
 	public static double writeDouble(Scanner doubler){
 		boolean running = true;
 		while(running){
