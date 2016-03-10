@@ -15,7 +15,7 @@ public class Payment {
 		case WEEKLY:
 			auxDate.set(Calendar.DAY_OF_WEEK, 6);
 		case MONTHLY:
-			auxDate.set(Calendar.DAY_OF_WEEK, 6);
+			auxDate.set(Calendar.DAY_OF_MONTH, 30);
 		case TWICEAMONTH:
 			if(auxDate.get(Calendar.DAY_OF_MONTH) > 15){
 				auxDate.set(Calendar.DAY_OF_MONTH, 30);

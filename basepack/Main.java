@@ -64,9 +64,11 @@ public class Main {
 					cursor = 0;
 					break;
 				case 8:
+					System.out.println("Under development");
 					cursor = 0;
 					break;
 				case 9:
+					MainMenu.changePayType(sWriter, employeeHash);
 					cursor = 0;
 					break;
 				case 10:

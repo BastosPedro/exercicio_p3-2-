@@ -10,10 +10,10 @@ public class Auxiliary {
 	public static void printOptions(){
 		System.out.println("Welcome, please choose an option\n" +
 						    "1) Add employee\n" + "2) Remove employee\n" +
-							"3) Send payment card\n" + "4) Send sales result\n" + 
+							"3) Send hours worked\n" + "4) Send sales result\n" + 
 						    "5) Send syndicate tax\n" + "6) Change employee details\n" +
 							"7) Send today's payment\n" + "8) Undo/Redo\n" +
-						    "9) Payment schedule\n" + "10) Create schedule\n" +
+						    "9) Change Payment schedule\n" + "10) Create schedule\n" +
 							"11) Exit");
 	}
 	
