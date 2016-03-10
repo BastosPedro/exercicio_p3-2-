@@ -47,15 +47,15 @@ public class MenuOptions {
 				}
 			}
 			if(auxSyndicate){
-				System.out.println("Last, but no least, please insert the syndicate's tax (percentage)");
+				System.out.println("Hold on, please insert the syndicate's tax (percentage)");
 				while(auxTax == 0){
 					auxTax = Auxiliary.writeDouble(doubler);
 				}
 			}
-			System.out.println("Just hold on a second! How is our new employee going to receive his money?\n" + 
-								"1)Mail 2) Check 3) Deposit");
-			while(auxChoose2 >= 4 || auxChoose == 0){
-				auxChoose = Auxiliary.writeInt(inter);
+			while(auxChoose2 >=4 || auxChoose2 == 0){
+				System.out.println("Last but not least, how is our new employee going to receive his money?\n" + 
+								   "1)Mail 2) Check 3) Deposit");
+				auxChoose2 = Auxiliary.writeInt(inter);
 			}
 			System.out.println(auxName + " got employed! Huzzah!");
 			return new Employee(auxName, auxAddress, auxPayment, auxSyndicate, auxTax, auxChoose, auxChoose2, auxComission);
@@ -246,6 +246,7 @@ public class MenuOptions {
 								hash.get(auxName).setComission(Auxiliary.writeDouble(doubler));
 								hash.get(auxName).setEmployeeType(EmploymentType.SALARIED);
 								hash.get(auxName).setFrequency(Frequency.MONTHLY);
+								System.out.println("Updated, changed payment frequency to default(twice a month)");
 								break;
 							}
 							auxChoose = 0;
@@ -264,11 +265,15 @@ public class MenuOptions {
 						switch(temp){
 							case "mail":
 								hash.get(auxName).setPayType(GetsPaid.MAIL);
+								break;
 							case "check":
 								hash.get(auxName).setPayType(GetsPaid.CHECK);
+								break;
 							case "deposit":
 								hash.get(auxName).setPayType(GetsPaid.DEPOSIT);
+								break;
 						}
+						System.out.println("Updated");
 						auxChoose = 0;
 						break;
 					case 5:
@@ -276,7 +281,7 @@ public class MenuOptions {
 							System.out.println("Is he or she still with the syndicate?");
 						} else System.out.println("Will he or she join the syndicate?");
 						
-						while(auxChoose != 1 || auxChoose != 2){
+						while(auxChoose >= 3 || auxChoose == 0){
 							System.out.println("1)Yes 2)No");
 							auxChoose = Auxiliary.writeInt(inter);
 						}
@@ -287,6 +292,7 @@ public class MenuOptions {
 								hash.get(auxName).setTax(Auxiliary.writeDouble(doubler));
 							}
 							hash.get(auxName).setSyndicate(true);
+							System.out.println("Updated");
 							auxChoose = 0;
 							break;
 						}
@@ -298,6 +304,19 @@ public class MenuOptions {
 					case 6:
 						if(hash.get(auxName).isSyndicate() == false){
 							System.out.println("This employee is not a member of the syndicate");
+						}else{
+							boolean repeatedNum = true;
+							while(repeatedNum){
+								System.out.println("Please write his/her new syndicate id(just an integer)");
+								int aux = Auxiliary.writeInt(inter);
+								if(hash.containsValue(hash.get(auxName).getSyndicateId())){
+									System.out.println("There's someone with that id already");
+								}else{
+									System.out.println("Updated");
+									hash.get(auxName).setSyndicateId(aux);
+									repeatedNum = false;
+								}
+							}
 						}
 						auxChoose = 0;
 						break;
@@ -305,6 +324,7 @@ public class MenuOptions {
 						if(hash.get(auxName).isSyndicate()){
 							System.out.println("Please enter the new base tax");
 							hash.get(auxName).setTax(Auxiliary.writeDouble(doubler));
+							System.out.println("Updated");
 							auxChoose = 0;
 							break;
 						}else{
@@ -320,6 +340,50 @@ public class MenuOptions {
 				}
 				
 			}
+	public void payRoll(HashMap<String, Employee> hash){
+		if(Auxiliary.CheckHash(hash)){
+			Payment today = new Payment();
+			System.out.println("Name | Value to get paid | Payday | How to pay\n");
+			for(HashMap.Entry<String, Employee> entry : hash.entrySet()){
+				System.out.println(today.printMan(entry.getValue()));
+			}
 		}
+	}
+	public void changePayType(Scanner stringer,HashMap<String, Employee> hash){
+		boolean running = Auxiliary.CheckHash(hash);
+		while(running){
+			System.out.println("Please the employee's name");
+			String auxName = Auxiliary.writeString(stringer);
+			if(hash.containsKey(auxName) == false){
+				System.out.println("No one called like that works here");
+			}
+			else{
+				System.out.println("Please write what kind of schedule you want to change to: \n"
+									+ "'weekly', 'monthly', 'twice a month'");
+				switch(Auxiliary.writeString(stringer)){
+					case "weekly":
+						System.out.println("Updated");
+						hash.get(auxName).setFrequency(Frequency.WEEKLY);
+						running = false;
+						break;
+					case "monthly":
+						System.out.println("Updated");
+						hash.get(auxName).setFrequency(Frequency.MONTHLY);
+						running = false;
+						break;
+					case "twice a month":
+						System.out.println("Updated");
+						hash.get(auxName).setFrequency(Frequency.TWICEAMONTH);
+						running = false;
+						break;
+					default:
+						System.out.println("Wrong awnser, bro");
+						break;
+				}
+			}
+		}
+	}
+	
+}
 	
 

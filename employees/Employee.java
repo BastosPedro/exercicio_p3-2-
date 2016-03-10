@@ -4,7 +4,7 @@ import payment.GetsPaid;
 
 public class Employee {
 	private double basePayment, finalPayment, baseTax, debt, comission;
-	private boolean isSyndicate;
+	private boolean isSyndicate, disconted;
 	private int id, syndicateId;
 	private String name, address;
 	private Frequency frequency;
@@ -20,16 +20,19 @@ public class Employee {
 		setTax(tax);
 		setDebt(0);
 		setFinalPayment(0);
+		setDisconted(false);
 		switch(option){
 		case 1:
 			setEmployeeType(EmploymentType.HOURLY);
 			setFrequency(Frequency.WEEKLY);
 			break;
 		case 2:
+			setFinalPayment(this.getBasePayment());
 			setEmployeeType(EmploymentType.SALARIED);
 			setFrequency(Frequency.MONTHLY);
 			break;
 		case 3:
+			setFinalPayment(this.getBasePayment());
 			setEmployeeType(EmploymentType.COMISSIONED);
 			setFrequency(Frequency.TWICEAMONTH);
 			break;
@@ -46,6 +49,32 @@ public class Employee {
 			break;
 		}
 	}
+	
+	//This method calculates the FinalPayment according to the type of Employee
+	public void calculate(double input){
+		switch(this.getEmployeeType()){
+		case HOURLY:
+			double temp;
+			if(input <= 8){
+				temp = (this.getBasePayment())*input;
+			}
+			else{
+				temp = (this.getBasePayment())*8;
+				temp += 1.5*((this.getBasePayment())*(input - 8));
+			}
+			this.setFinalPayment(this.getFinalPayment() + temp);
+			break;
+		case COMISSIONED:
+			this.setFinalPayment(getFinalPayment() + (input*(this.getComission())/100));
+			break;
+		case SALARIED:
+			this.setFinalPayment(this.getBasePayment());
+			break;
+		}
+		System.out.println(this.getName() + " now has " + this.getFinalPayment() + " on his paycheck" );
+	}
+	
+//Just getters and settters here
 	
 	public String getName() {
 		return name;
@@ -98,31 +127,24 @@ public class Employee {
 	public Frequency getFrequency() {
 		return frequency;
 	}
-
 	public void setFrequency(Frequency frequency) {
 		this.frequency = frequency;
 	}
-
 	public int getSyndicateId() {
 		return syndicateId;
 	}
-
 	public void setSyndicateId(int syndicateId) {
 		this.syndicateId = syndicateId;
 	}
-
 	public GetsPaid getPayType() {
 		return payType;
 	}
-
 	public void setPayType(GetsPaid payType) {
 		this.payType = payType;
 	}
-
 	public EmploymentType getEmployeeType() {
 		return employeeType;
 	}
-
 	public void setEmployeeType(EmploymentType employeeType) {
 		this.employeeType = employeeType;
 	}
@@ -132,27 +154,11 @@ public class Employee {
 	public void setComission(double comission){
 		this.comission = comission;
 	}
-
-	public void calculate(double input){
-		switch(this.getEmployeeType()){
-		case HOURLY:
-			double temp;
-			if(input <= 8){
-				temp = (this.getBasePayment())*input;
-			}
-			else{
-				temp = (this.getBasePayment())*8;
-				temp += 1.5*((this.getBasePayment())*(input - 8));
-			}
-			this.setFinalPayment(this.getFinalPayment() + temp);
-			break;
-		case COMISSIONED:
-			this.setFinalPayment(getFinalPayment() + (input*this.getComission()));
-			break;
-		case SALARIED:
-			this.setFinalPayment(this.getBasePayment());
-			break;
-		}
-		System.out.println(this.getName() + " now has " + this.getFinalPayment() + " on his paycheck" );
+	public boolean isDisconted() {
+		return disconted;
 	}
+	public void setDisconted(boolean disconted) {
+		this.disconted = disconted;
+	}
+	
 }

@@ -60,6 +60,7 @@ public class Main {
 					cursor = 0;
 					break;
 				case 7:
+					MainMenu.payRoll(employeeHash);
 					cursor = 0;
 					break;
 				case 8:
